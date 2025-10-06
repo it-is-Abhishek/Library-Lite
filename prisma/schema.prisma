@@ -15,19 +15,19 @@ datasource db {
 }
 
 model User {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   name        String
-  email       String   @unique
-  membership  String   @default("regular") 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  email       String    @unique
+  membership  String    @default("regular")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   borrowings  Borrow[]
 }
 
 model Author {
   id    Int    @id @default(autoincrement())
   name  String
-  bio   String?
+  bio   String
   books Book[]
 }
 
@@ -40,23 +40,18 @@ model Book {
   authorId    Int
   author      Author       @relation(fields: [authorId], references: [id])
   borrowings  Borrow[]
-  categories  Category[]   @relation("BookCategories")
-}
-
-model Category {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  books Book[] @relation("BookCategories")
 }
 
 model Borrow {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   userId     Int
   bookId     Int
-  borrowDate DateTime @default(now())
+  borrowDate DateTime  @default(now())
+  dueDate    DateTime  
   returnDate DateTime?
-  returned   Boolean  @default(false)  
-  status     String   @default("borrowed") 
+  returned   Boolean   @default(false)
+  fine       Float     @default(0.0)  
+  status     String    @default("borrowed")
 
   user User @relation(fields: [userId], references: [id])
   book Book @relation(fields: [bookId], references: [id])

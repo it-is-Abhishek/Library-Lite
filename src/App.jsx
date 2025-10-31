@@ -1,18 +1,24 @@
-import React from 'react'
-import Signup from './components/SignupPage.jsx'
-import Login from './components/LoginPage.jsx'
+
+import React, { useState } from "react";
+import BackgroundVideo from "./components/BackgroundVideo";
+import LoginPage from "./components/LoginPage";
+import SignupPage from "./components/SignUpPage";
 
 function App() {
+  const [isLogin, setIsLogin] = useState(true);
 
+  const handleSwitch = () => setIsLogin(!isLogin);
 
   return (
-    <>
-      <div className="App"></div>
-        <h1>Library Lite</h1>
-        <Signup />
-        <Login />
-    </>
-  )
+    <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
+      <BackgroundVideo />
+      {isLogin ? (
+        <LoginPage onSwitchToSignup={handleSwitch} />
+      ) : (
+        <SignupPage onSwitchToLogin={handleSwitch} />
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;

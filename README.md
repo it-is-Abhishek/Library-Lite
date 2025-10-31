@@ -1,4 +1,4 @@
-# Please refer the Update.md file for the recent devlopment updates.
+# Please refer the ![Update.md](./UPDATE.md) file for the recent devlopment updates.
 # Library Lite
 
 **Library Lite** — a lightweight digital library management platform built with **React** (frontend) and **Node.js / Express** (backend).  

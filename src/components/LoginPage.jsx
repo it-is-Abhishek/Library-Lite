@@ -82,13 +82,6 @@ function LoginPage({ onSwitchToSignup, onLogin }) {
               </div>
             </div>
 
-            {/* Forgot Password */}
-            <div className="forgot-password">
-              <button type="button" className="forgot-link">
-                Forgot Password?
-              </button>
-            </div>
-
             {/* Submit Button */}
             <button onClick={handleSubmit} className="btn btn-primary">
               Sign In

@@ -82,7 +82,8 @@ export const authAPI = {
 
     const data = await response.json();
     return data;
-  },    // Get current user
+  },
+  // Get current user
     getCurrentUser: async () => {
         const token = localStorage.getItem('access_token');
 

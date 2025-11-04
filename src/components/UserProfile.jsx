@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { authAPI } from '../api/auth';
+import './UserProfile.css';
 
 // Example: Display user profile with database information
 function UserProfile() {
@@ -21,8 +22,8 @@ function UserProfile() {
         }
     };
 
-    if (loading) return <div>Loading...</div>;
-    if (!user) return <div>Not logged in</div>;
+    if (loading) return <div className="loading">Loading...</div>;
+    if (!user) return <div className="not-logged-in">Not logged in</div>;
 
     return (
         <div className="user-profile">

@@ -34,7 +34,6 @@
 
 ---
 
-
 #### Supabase Authentication Integration
 - ✅ Configured Supabase client with environment variables
 - ✅ Set up authentication flow with JWT tokens

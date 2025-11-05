@@ -198,5 +198,20 @@ canvas {
     transform: translate(1000px);
     opacity: 0;
     will-change: transform, opacity;
-    
+
+}
+
+@media (max-width: 1000px){
+    h1{
+        font-size: 2rem;
+    }
+
+    nav .nav-links,
+    nav .nav-buttons {
+        display: none;
+     }
+
+    .header h1, .client-logos, .hero-img-container {
+        width: calc(100% - 4rem);
+    }
 }

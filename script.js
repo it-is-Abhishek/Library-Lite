@@ -12,4 +12,67 @@ document.addEventListener("DOMContentLoaded", () => {
         lenis.raf(time * 1000);
     });
     gsap.ticker.lagSmoothing(0);
+
+    const nav = document.querySelector("nav");
+    const header = document.querySelector(".header");
+    const heroImg = document.querySelector(".hero-img");
+    const canvas = document.querySelector("canvas");
+    const context = canvas.getContext("2d");
+
+    const setCanvasSize = () => {
+        const pixelRatio = window.devicePixelRatio || 1;
+        canvas.width = window.innerWidth * pixelRatio;
+        canvas.height = window.innerHeight * pixelRatio;
+        canvas.style.width = window.innerWidth + "px";
+        canvas.style.height = window.innerHeight + "px";
+        context.scale(pixelRatio, pixelRatio);
+    };
+    setCanvasSize();
+
+    const frameCount = 207;
+    const currentFrame = (index) => {
+        `/frames/frame_${(index+1).toString().padStart(4, "0")}.jpg`;
+    }
+
+    let images  = [];
+    let videoFrames = {frame : 0};
+    let imagesToLoad = frameCard;
+
+    const onLoad = () => {
+        imagesToLoad--;
+    }
+
+    if (!imagesToLoad){
+        render();
+        setupScrollTrigger();
+    }
+
+    for (let i = 0; i < frameCount; i++){
+        const img = new Image();
+        img.onload = onLoad;
+
+        img.onerror = function(){
+            onLoad.call(this);
+        };
+        img.src = currentFrame(i);
+        images.push(img);
+
+    }
+
+    const render = () => {
+        const canvasWidth = window.innerWidth;
+        const canvasHeight = window.innerHeight;
+
+
+        context.clearReact(0, 0, canvasWidth, canvasHeight);
+
+        const img = images[videoFrames.frame];
+        if (img && img.complete && img.naturalWidth > 0){
+            const imgageAspect = img.naturalWidth / img.naturalHeight;
+            const canvasAspect = canvasWidth / canvasHeight;
+
+            let drowWidth, drownHeight, drawX , drawY ;
+
+        }
+    }
 });

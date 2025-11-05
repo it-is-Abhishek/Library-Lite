@@ -73,6 +73,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
             let drowWidth, drownHeight, drawX , drawY ;
 
+            if (imageAspect > canvasAspect){
+                drawHeight = canvasHeight;
+                drawWidth = drawHeight * imageAspect;
+                drawX = (canvasWidth - drawWidth) / 2;
+                drawY = 0
+            }
+            else{
+                drawWidth = canvasWidth;
+                drawHeight = drawWidth / imageAspect;
+                drawX = 0;
+                drawY = (canvasHeight - drawHeight) / 2;
+            }
+
+            
+
+
         }
     }
 });

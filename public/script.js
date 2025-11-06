@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     setCanvasSize();
 
-    const frameCount = 163;
+    const frameCount = 600;
     const currentFrame = (index) => `/assets/frames/frame_${180000 + index}.jpg`;
 
     let images  = [];
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log('Scroll progress:', progress);
 
         const animationProgress = Math.min(progress / 0.9, 1);
-        const offset = 122;
+        const offset = 123;
         const targetFrame = Math.round(animationProgress * (frameCount - 1 - offset)) + offset;
         console.log('Target frame:', targetFrame);
         videoFrames.frame = targetFrame;
@@ -190,7 +190,6 @@ document.addEventListener("DOMContentLoaded", () => {
             },
         });
 
-        // Set initial state
         updateAnimation(0);
     };
 

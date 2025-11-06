@@ -1,0 +1,5 @@
+- Update frameCount from 622 to 162
+- Fix currentFrame function to generate paths like /assets/frames/frame_180000.jpg to frame_180161.jpg
+- Correct typo in render function: clearReact to clearRect
+- Correct typo: imgageAspect to imageAspect
+- Fix nav opacity bug: in onUpdate, set gsap.set(nav, {opacity}); in if block, and gsap.set(nav, {opacity: 0}); in else block

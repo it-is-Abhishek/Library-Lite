@@ -30,9 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     setCanvasSize();
 
-    const frameCount = 622;
+    const frameCount = 162;
     const currentFrame = (index) => {
-        `/frames/frame_${(index+1).toString().padStart(4, "0")}.jpg`;
+        `/assets/frames/frame_${180000 + index}.jpg`;
     }
 
     let images  = [];
@@ -66,12 +66,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const canvasHeight = window.innerHeight;
 
 
-        context.clearReact(0, 0, canvasWidth, canvasHeight);
+        context.clearRect(0, 0, canvasWidth, canvasHeight);
 
 
         const img = images[videoFrames.frame];
         if (img && img.complete && img.naturalWidth > 0){
-            const imgageAspect = img.naturalWidth / img.naturalHeight;
+            const imageAspect = img.naturalWidth / img.naturalHeight;
             const canvasAspect = canvasWidth / canvasHeight;
 
             let drawWidth, drawHeight, drawX , drawY ;
@@ -113,9 +113,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (progress <= 0.1){
                     const navProgress = progress / 0.1;
                     const opacity = 1 - navProgress;
-                    gsap.set(nav, {opacity: 0});
-                } else{
                     gsap.set(nav, {opacity});
+                } else{
+                    gsap.set(nav, {opacity: 0});
                 }
 
 
@@ -137,9 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     gsap.set(header, {opacity: 0});
                 }
-
-                //////////////////////
-
 
                 if (progress < 0.6) {
                     gsap.set(heroImg, {

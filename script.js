@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     gsap.ticker.lagSmoothing(0);
 
+
     const nav = document.querySelector("nav");
     const header = document.querySelector(".header");
     const heroImg = document.querySelector(".hero-img");
@@ -29,23 +30,24 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     setCanvasSize();
 
-    const frameCount = 207;
+    const frameCount = 622;
     const currentFrame = (index) => {
         `/frames/frame_${(index+1).toString().padStart(4, "0")}.jpg`;
     }
 
     let images  = [];
     let videoFrames = {frame : 0};
-    let imagesToLoad = frameCard;
+    let imagesToLoad = frameCount;
 
     const onLoad = () => {
         imagesToLoad--;
-    }
+        
+        if (!imagesToLoad){
+            render();
+            setupScrollTrigger();
+        }
+    };
 
-    if (!imagesToLoad){
-        render();
-        setupScrollTrigger();
-    }
 
     for (let i = 0; i < frameCount; i++){
         const img = new Image();
@@ -66,12 +68,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         context.clearReact(0, 0, canvasWidth, canvasHeight);
 
+
         const img = images[videoFrames.frame];
         if (img && img.complete && img.naturalWidth > 0){
             const imgageAspect = img.naturalWidth / img.naturalHeight;
             const canvasAspect = canvasWidth / canvasHeight;
 
-            let drowWidth, drownHeight, drawX , drawY ;
+            let drawWidth, drawHeight, drawX , drawY ;
 
             if (imageAspect > canvasAspect){
                 drawHeight = canvasHeight;
@@ -86,9 +89,96 @@ document.addEventListener("DOMContentLoaded", () => {
                 drawY = (canvasHeight - drawHeight) / 2;
             }
 
-            
-
-
+            context.drawImage(img, drawX, drawY, drawWidth, drawHeight);
         }
-    }
+    };
+
+    const setupScrollTrigger = () => {
+        ScrollTrigger.create({
+            trigger: ".hero", 
+            start: "top top",
+            end : `+=${window.innerHeight * 7}px`,
+            pin : true,
+            pinSpacing: true,
+            scrub:1,
+            onUpdate: (self) => {
+                const progress = self.progress;
+
+                const annimationProgress = Math.min(progress / 0.9, 1);
+                const targetFrame = Math.round(annimationProgress * (frameCount - 1));
+                videoFrames.frame = targetFrame;
+                render();
+
+
+                if (progress <= 0.1){
+                    const navProgress = progress / 0.1;
+                    const opacity = 1 - navProgress;
+                    gsap.set(nav, {opacity: 0});
+                } else{
+                    gsap.set(nav, {opacity});
+                }
+
+
+                if (progress <= 0.25){
+                    const zProgress = progress / 0.25;
+                    const translateZ = zProgress * -500;
+
+                    let opacity = 1;
+                    if (progress >= 0.2){
+                        const fadeProgress = Math.min((progress - 0.2) / (0.25 - 0.2), 1);
+                        opacity = 1 - fadeProgress;
+                    }
+
+                    gsap.set(header, {
+                        transform : `translate(-50%, -50%) translateZ(${translateZ}px)`,
+                        opacity,
+                    });
+
+                } else {
+                    gsap.set(header, {opacity: 0});
+                }
+
+                //////////////////////
+
+
+                if (progress < 0.6) {
+                    gsap.set(heroImg, {
+                        transform: "translateZ(1000px)",
+                        opacity : 0,
+                    });
+                
+                } else if (progress >= 0.6 && progress <= 0.9){
+                    const imgProgress = (progress - 0.6) / 0.3;
+                    const translateZ = 1000 - imgProgress * 1000;
+
+                    let opacity = 0;
+
+                    if (progress <= 0.8){
+                        const opacityProgress = (progress - 0.6) / 0.2;
+                        opacity = opacityProgress;
+                    } else {
+                        opacity = 1;
+                    }
+
+                    gsap.set(heroImg,{
+                        transform : `translateZ(${translateZ}px)`,
+                        opacity,
+                    });
+                } else {
+                    gsap.set(heroImg,{
+                        transform: "translateZ(0px)",
+                        opacity : 1,
+                    });
+                }
+            },
+        });
+    };
+
+
+    window.addEventListener("resize", () => {
+        setCanvasSize();
+        render();
+        ScrollTrigger.refresh();
+    });
+
 });

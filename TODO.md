@@ -1,5 +1,6 @@
-- Update frameCount from 622 to 162
-- Fix currentFrame function to generate paths like /assets/frames/frame_180000.jpg to frame_180161.jpg
-- Correct typo in render function: clearReact to clearRect
-- Correct typo: imgageAspect to imageAspect
-- Fix nav opacity bug: in onUpdate, set gsap.set(nav, {opacity}); in if block, and gsap.set(nav, {opacity: 0}); in else block
+# TODO: Fix Scroll Animation
+
+- [x] Update frameCount to 163 in script.js
+- [x] Change scrub:1 to scrub: true in ScrollTrigger
+- [x] Change end to +=${window.innerHeight * 3}px in ScrollTrigger
+- [x] Add console.log after images load to verify loading

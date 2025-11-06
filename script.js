@@ -1,4 +1,3 @@
-import { time } from "framer-motion";
 import gsap from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import Lenis from "lenis";
@@ -7,11 +6,28 @@ document.addEventListener("DOMContentLoaded", () => {
     gsap.registerPlugin(ScrollTrigger);
 
     const lenis = new Lenis();
+
+    ScrollTrigger.scrollerProxy(document.body, {
+        scrollTop(value) {
+            if (arguments.length) {
+                lenis.scrollTo(value, { immediate: true });
+            }
+            return lenis.scroll;
+        },
+        getBoundingClientRect() {
+            return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+        }
+    });
+
+    ScrollTrigger.addEventListener('refresh', () => lenis.resize());
+
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add((time) => {
         lenis.raf(time * 1000);
     });
     gsap.ticker.lagSmoothing(0);
+
+    lenis.start();
 
 
     const nav = document.querySelector("nav");
@@ -30,10 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     setCanvasSize();
 
-    const frameCount = 162;
-    const currentFrame = (index) => {
-        `/assets/frames/frame_${180000 + index}.jpg`;
-    }
+    const frameCount = 163;
+    const currentFrame = (index) => `/assets/frames/frame_${180000 + index}.jpg`;
 
     let images  = [];
     let videoFrames = {frame : 0};
@@ -43,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         imagesToLoad--;
         
         if (!imagesToLoad){
+            console.log('All images loaded');
             render();
             setupScrollTrigger();
         }
@@ -93,82 +108,90 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    const updateAnimation = (progress) => {
+        console.log('Scroll progress:', progress);
+
+        const animationProgress = Math.min(progress / 0.9, 1);
+        const offset = 122;
+        const targetFrame = Math.round(animationProgress * (frameCount - 1 - offset)) + offset;
+        console.log('Target frame:', targetFrame);
+        videoFrames.frame = targetFrame;
+        render();
+
+        if (progress <= 0.1){
+            const navProgress = progress / 0.1;
+            const opacity = 1 - navProgress;
+            gsap.set(nav, {opacity});
+        } else{
+            gsap.set(nav, {opacity: 0});
+        }
+
+        if (progress <= 0.25){
+            const zProgress = progress / 0.25;
+            const translateZ = zProgress * -500;
+
+            let opacity = 1;
+            if (progress >= 0.2){
+                const fadeProgress = Math.min((progress - 0.2) / (0.25 - 0.2), 1);
+                opacity = 1 - fadeProgress;
+            }
+
+            gsap.set(header, {
+                transform : `translate(-50%, -50%) translateZ(${translateZ}px)`,
+                opacity,
+            });
+
+        } else {
+            gsap.set(header, {opacity: 0});
+        }
+
+        if (progress < 0.6) {
+            gsap.set(heroImg, {
+                transform: "translateZ(1000px)",
+                opacity : 0,
+            });
+
+        } else if (progress >= 0.6 && progress <= 0.9){
+            const imgProgress = (progress - 0.6) / 0.3;
+            const translateZ = 1000 - imgProgress * 1000;
+
+            let opacity = 0;
+
+            if (progress <= 0.8){
+                const opacityProgress = (progress - 0.6) / 0.2;
+                opacity = opacityProgress;
+            } else {
+                opacity = 1;
+            }
+
+            gsap.set(heroImg,{
+                transform : `translateZ(${translateZ}px)`,
+                opacity,
+            });
+        } else {
+            gsap.set(heroImg,{
+                transform: "translateZ(0px)",
+                opacity : 1,
+            });
+        }
+    };
+
     const setupScrollTrigger = () => {
         ScrollTrigger.create({
-            trigger: ".hero", 
+            trigger: ".hero",
             start: "top top",
-            end : `+=${window.innerHeight * 7}px`,
+            end : `+=${window.innerHeight * 3}px`,
             pin : true,
             pinSpacing: true,
-            scrub:1,
+            scrub: true,
+            scroller: document.body,
             onUpdate: (self) => {
-                const progress = self.progress;
-
-                const annimationProgress = Math.min(progress / 0.9, 1);
-                const targetFrame = Math.round(annimationProgress * (frameCount - 1));
-                videoFrames.frame = targetFrame;
-                render();
-
-
-                if (progress <= 0.1){
-                    const navProgress = progress / 0.1;
-                    const opacity = 1 - navProgress;
-                    gsap.set(nav, {opacity});
-                } else{
-                    gsap.set(nav, {opacity: 0});
-                }
-
-
-                if (progress <= 0.25){
-                    const zProgress = progress / 0.25;
-                    const translateZ = zProgress * -500;
-
-                    let opacity = 1;
-                    if (progress >= 0.2){
-                        const fadeProgress = Math.min((progress - 0.2) / (0.25 - 0.2), 1);
-                        opacity = 1 - fadeProgress;
-                    }
-
-                    gsap.set(header, {
-                        transform : `translate(-50%, -50%) translateZ(${translateZ}px)`,
-                        opacity,
-                    });
-
-                } else {
-                    gsap.set(header, {opacity: 0});
-                }
-
-                if (progress < 0.6) {
-                    gsap.set(heroImg, {
-                        transform: "translateZ(1000px)",
-                        opacity : 0,
-                    });
-                
-                } else if (progress >= 0.6 && progress <= 0.9){
-                    const imgProgress = (progress - 0.6) / 0.3;
-                    const translateZ = 1000 - imgProgress * 1000;
-
-                    let opacity = 0;
-
-                    if (progress <= 0.8){
-                        const opacityProgress = (progress - 0.6) / 0.2;
-                        opacity = opacityProgress;
-                    } else {
-                        opacity = 1;
-                    }
-
-                    gsap.set(heroImg,{
-                        transform : `translateZ(${translateZ}px)`,
-                        opacity,
-                    });
-                } else {
-                    gsap.set(heroImg,{
-                        transform: "translateZ(0px)",
-                        opacity : 1,
-                    });
-                }
+                updateAnimation(self.progress);
             },
         });
+
+        // Set initial state
+        updateAnimation(0);
     };
 
 

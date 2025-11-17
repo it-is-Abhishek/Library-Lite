@@ -1,5 +1,5 @@
 // API configuration
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.API_BASE_URL;
 
 // Auth API functions
 export const authAPI = {
@@ -18,18 +18,11 @@ export const authAPI = {
       }),
     });
 
-    if (!response.ok) {
-      let errorMessage = 'Signup failed';
-      try {
-        const errorData = await response.json();
-        errorMessage = errorData.error || errorMessage;
-      } catch (e) {
-        console.error('Error parsing error response:', e);
-      }
-      throw new Error(errorMessage);
-    }
-
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Signup failed');
+    }
 
     // Store session token and user data
     if (data.session) {
@@ -52,18 +45,11 @@ export const authAPI = {
             body: JSON.stringify({ email, password }),
         });
 
-        if (!response.ok) {
-            let errorMessage = 'Login failed';
-            try {
-                const errorData = await response.json();
-                errorMessage = errorData.error || errorMessage;
-            } catch (e) {
-                console.error('Error parsing error response:', e);
-            }
-            throw new Error(errorMessage);
-        }
-
         const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Login failed');
+        }
 
         // Store session token and user data
         if (data.session) {

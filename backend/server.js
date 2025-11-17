@@ -16,6 +16,9 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 
 // Health check route
+app.get('/api', (req, res) => {
+  res.status(200).send('API for Library Lite is running');
+});
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running' });
 });

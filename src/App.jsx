@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import LandingPage from "./components/LandingPage";
 import BackgroundVideo from "./components/BackgroundVideo";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
@@ -7,22 +8,25 @@ import UserProfile from "./components/UserProfile";
 
 
 function App() {
-  const [isLogin, setIsLogin] = useState(true);
-
-  const handleSwitch = () => setIsLogin(!isLogin);
-
   return (
     <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
       <Routes>
-        {/* Auth Routes with Background Video */}
-        <Route path="/" element={
+        {/* Landing Page Route */}
+        <Route path="/" element={<LandingPage />} />
+
+        {/* Login Route with Background Video */}
+        <Route path="/login" element={
           <>
             <BackgroundVideo />
-            {isLogin ? (
-              <LoginPage onSwitchToSignup={handleSwitch} />
-            ) : (
-              <SignupPage onSwitchToLogin={handleSwitch} />
-            )}
+            <LoginPage onSwitchToSignup={() => window.location.href = '/signup'} />
+          </>
+        } />
+
+        {/* Signup Route with Background Video */}
+        <Route path="/signup" element={
+          <>
+            <BackgroundVideo />
+            <SignupPage onSwitchToLogin={() => window.location.href = '/login'} />
           </>
         } />
 

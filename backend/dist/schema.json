@@ -1,0 +1,1047 @@
+{
+  "tables": {
+    "User": {
+      "name": "User",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "fullName": {
+          "name": "fullName",
+          "type": "text",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "default": "member",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "phone": {
+          "name": "phone",
+          "type": "text",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "authId": {
+          "name": "authId",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp(3)",
+          "default": "CURRENT_TIMESTAMP",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp(3)",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        }
+      },
+      "comment": null,
+      "indexes": {
+        "User_pkey": {
+          "name": "User_pkey",
+          "unique": true,
+          "columns": [
+            "id"
+          ],
+          "type": ""
+        },
+        "User_email_key": {
+          "name": "User_email_key",
+          "unique": true,
+          "columns": [
+            "email"
+          ],
+          "type": ""
+        },
+        "User_authId_key": {
+          "name": "User_authId_key",
+          "unique": true,
+          "columns": [
+            "authId"
+          ],
+          "type": ""
+        }
+      },
+      "constraints": {
+        "PRIMARY_id": {
+          "type": "PRIMARY KEY",
+          "name": "PRIMARY_id",
+          "columnNames": [
+            "id"
+          ]
+        },
+        "UNIQUE_email": {
+          "type": "UNIQUE",
+          "name": "UNIQUE_email",
+          "columnNames": [
+            "email"
+          ]
+        },
+        "UNIQUE_authId": {
+          "type": "UNIQUE",
+          "name": "UNIQUE_authId",
+          "columnNames": [
+            "authId"
+          ]
+        }
+      }
+    },
+    "Member": {
+      "name": "Member",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "membershipType": {
+          "name": "membershipType",
+          "type": "text",
+          "default": "basic",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "startDate": {
+          "name": "startDate",
+          "type": "timestamp(3)",
+          "default": "CURRENT_TIMESTAMP",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "expiryDate": {
+          "name": "expiryDate",
+          "type": "timestamp(3)",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "default": "active",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        }
+      },
+      "comment": null,
+      "indexes": {
+        "Member_pkey": {
+          "name": "Member_pkey",
+          "unique": true,
+          "columns": [
+            "id"
+          ],
+          "type": ""
+        },
+        "Member_userId_key": {
+          "name": "Member_userId_key",
+          "unique": true,
+          "columns": [
+            "userId"
+          ],
+          "type": ""
+        }
+      },
+      "constraints": {
+        "PRIMARY_id": {
+          "type": "PRIMARY KEY",
+          "name": "PRIMARY_id",
+          "columnNames": [
+            "id"
+          ]
+        },
+        "UNIQUE_userId": {
+          "type": "UNIQUE",
+          "name": "UNIQUE_userId",
+          "columnNames": [
+            "userId"
+          ]
+        },
+        "MemberToUser": {
+          "type": "FOREIGN KEY",
+          "name": "MemberToUser",
+          "columnNames": [
+            "userId"
+          ],
+          "targetTableName": "User",
+          "targetColumnNames": [
+            "id"
+          ],
+          "updateConstraint": "NO_ACTION",
+          "deleteConstraint": "CASCADE"
+        }
+      }
+    },
+    "Author": {
+      "name": "Author",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "bio": {
+          "name": "bio",
+          "type": "text",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp(3)",
+          "default": "CURRENT_TIMESTAMP",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        }
+      },
+      "comment": null,
+      "indexes": {
+        "Author_pkey": {
+          "name": "Author_pkey",
+          "unique": true,
+          "columns": [
+            "id"
+          ],
+          "type": ""
+        }
+      },
+      "constraints": {
+        "PRIMARY_id": {
+          "type": "PRIMARY KEY",
+          "name": "PRIMARY_id",
+          "columnNames": [
+            "id"
+          ]
+        }
+      }
+    },
+    "Book": {
+      "name": "Book",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "isbn": {
+          "name": "isbn",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "authorId": {
+          "name": "authorId",
+          "type": "integer",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "publisher": {
+          "name": "publisher",
+          "type": "text",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "publishedYear": {
+          "name": "publishedYear",
+          "type": "integer",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "edition": {
+          "name": "edition",
+          "type": "text",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "language": {
+          "name": "language",
+          "type": "text",
+          "default": "English",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "pages": {
+          "name": "pages",
+          "type": "integer",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "genre": {
+          "name": "genre",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "totalCopies": {
+          "name": "totalCopies",
+          "type": "integer",
+          "default": 1,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "availableCopies": {
+          "name": "availableCopies",
+          "type": "integer",
+          "default": 1,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "coverUrl": {
+          "name": "coverUrl",
+          "type": "text",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "tags": {
+          "name": "tags",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp(3)",
+          "default": "CURRENT_TIMESTAMP",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp(3)",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        }
+      },
+      "comment": null,
+      "indexes": {
+        "Book_pkey": {
+          "name": "Book_pkey",
+          "unique": true,
+          "columns": [
+            "id"
+          ],
+          "type": ""
+        },
+        "Book_isbn_key": {
+          "name": "Book_isbn_key",
+          "unique": true,
+          "columns": [
+            "isbn"
+          ],
+          "type": ""
+        }
+      },
+      "constraints": {
+        "PRIMARY_id": {
+          "type": "PRIMARY KEY",
+          "name": "PRIMARY_id",
+          "columnNames": [
+            "id"
+          ]
+        },
+        "UNIQUE_isbn": {
+          "type": "UNIQUE",
+          "name": "UNIQUE_isbn",
+          "columnNames": [
+            "isbn"
+          ]
+        },
+        "AuthorToBook": {
+          "type": "FOREIGN KEY",
+          "name": "AuthorToBook",
+          "columnNames": [
+            "authorId"
+          ],
+          "targetTableName": "Author",
+          "targetColumnNames": [
+            "id"
+          ],
+          "updateConstraint": "NO_ACTION",
+          "deleteConstraint": "NO_ACTION"
+        }
+      }
+    },
+    "Loan": {
+      "name": "Loan",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "bookId": {
+          "name": "bookId",
+          "type": "integer",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "borrowDate": {
+          "name": "borrowDate",
+          "type": "timestamp(3)",
+          "default": "CURRENT_TIMESTAMP",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "dueDate": {
+          "name": "dueDate",
+          "type": "timestamp(3)",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "returnDate": {
+          "name": "returnDate",
+          "type": "timestamp(3)",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "fine": {
+          "name": "fine",
+          "type": "double precision",
+          "default": 0,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "default": "borrowed",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp(3)",
+          "default": "CURRENT_TIMESTAMP",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp(3)",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        }
+      },
+      "comment": null,
+      "indexes": {
+        "Loan_pkey": {
+          "name": "Loan_pkey",
+          "unique": true,
+          "columns": [
+            "id"
+          ],
+          "type": ""
+        },
+        "Loan_userId_idx": {
+          "name": "Loan_userId_idx",
+          "unique": false,
+          "columns": [
+            "userId"
+          ],
+          "type": ""
+        },
+        "Loan_bookId_idx": {
+          "name": "Loan_bookId_idx",
+          "unique": false,
+          "columns": [
+            "bookId"
+          ],
+          "type": ""
+        },
+        "Loan_status_idx": {
+          "name": "Loan_status_idx",
+          "unique": false,
+          "columns": [
+            "status"
+          ],
+          "type": ""
+        }
+      },
+      "constraints": {
+        "PRIMARY_id": {
+          "type": "PRIMARY KEY",
+          "name": "PRIMARY_id",
+          "columnNames": [
+            "id"
+          ]
+        },
+        "LoanToUser": {
+          "type": "FOREIGN KEY",
+          "name": "LoanToUser",
+          "columnNames": [
+            "userId"
+          ],
+          "targetTableName": "User",
+          "targetColumnNames": [
+            "id"
+          ],
+          "updateConstraint": "NO_ACTION",
+          "deleteConstraint": "NO_ACTION"
+        },
+        "BookToLoan": {
+          "type": "FOREIGN KEY",
+          "name": "BookToLoan",
+          "columnNames": [
+            "bookId"
+          ],
+          "targetTableName": "Book",
+          "targetColumnNames": [
+            "id"
+          ],
+          "updateConstraint": "NO_ACTION",
+          "deleteConstraint": "NO_ACTION"
+        }
+      }
+    },
+    "Reservation": {
+      "name": "Reservation",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "bookId": {
+          "name": "bookId",
+          "type": "integer",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "reservedAt": {
+          "name": "reservedAt",
+          "type": "timestamp(3)",
+          "default": "CURRENT_TIMESTAMP",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "default": "pending",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "notifySent": {
+          "name": "notifySent",
+          "type": "boolean",
+          "default": false,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "expiresAt": {
+          "name": "expiresAt",
+          "type": "timestamp(3)",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp(3)",
+          "default": "CURRENT_TIMESTAMP",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        }
+      },
+      "comment": null,
+      "indexes": {
+        "Reservation_pkey": {
+          "name": "Reservation_pkey",
+          "unique": true,
+          "columns": [
+            "id"
+          ],
+          "type": ""
+        },
+        "Reservation_userId_idx": {
+          "name": "Reservation_userId_idx",
+          "unique": false,
+          "columns": [
+            "userId"
+          ],
+          "type": ""
+        },
+        "Reservation_bookId_idx": {
+          "name": "Reservation_bookId_idx",
+          "unique": false,
+          "columns": [
+            "bookId"
+          ],
+          "type": ""
+        },
+        "Reservation_status_idx": {
+          "name": "Reservation_status_idx",
+          "unique": false,
+          "columns": [
+            "status"
+          ],
+          "type": ""
+        }
+      },
+      "constraints": {
+        "PRIMARY_id": {
+          "type": "PRIMARY KEY",
+          "name": "PRIMARY_id",
+          "columnNames": [
+            "id"
+          ]
+        },
+        "ReservationToUser": {
+          "type": "FOREIGN KEY",
+          "name": "ReservationToUser",
+          "columnNames": [
+            "userId"
+          ],
+          "targetTableName": "User",
+          "targetColumnNames": [
+            "id"
+          ],
+          "updateConstraint": "NO_ACTION",
+          "deleteConstraint": "NO_ACTION"
+        },
+        "BookToReservation": {
+          "type": "FOREIGN KEY",
+          "name": "BookToReservation",
+          "columnNames": [
+            "bookId"
+          ],
+          "targetTableName": "Book",
+          "targetColumnNames": [
+            "id"
+          ],
+          "updateConstraint": "NO_ACTION",
+          "deleteConstraint": "NO_ACTION"
+        }
+      }
+    },
+    "Payment": {
+      "name": "Payment",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "loanId": {
+          "name": "loanId",
+          "type": "integer",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "amount": {
+          "name": "amount",
+          "type": "double precision",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "paymentMethod": {
+          "name": "paymentMethod",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "default": "pending",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "transactionId": {
+          "name": "transactionId",
+          "type": "text",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "paymentDate": {
+          "name": "paymentDate",
+          "type": "timestamp(3)",
+          "default": "CURRENT_TIMESTAMP",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp(3)",
+          "default": "CURRENT_TIMESTAMP",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        }
+      },
+      "comment": null,
+      "indexes": {
+        "Payment_pkey": {
+          "name": "Payment_pkey",
+          "unique": true,
+          "columns": [
+            "id"
+          ],
+          "type": ""
+        },
+        "Payment_userId_idx": {
+          "name": "Payment_userId_idx",
+          "unique": false,
+          "columns": [
+            "userId"
+          ],
+          "type": ""
+        },
+        "Payment_loanId_idx": {
+          "name": "Payment_loanId_idx",
+          "unique": false,
+          "columns": [
+            "loanId"
+          ],
+          "type": ""
+        }
+      },
+      "constraints": {
+        "PRIMARY_id": {
+          "type": "PRIMARY KEY",
+          "name": "PRIMARY_id",
+          "columnNames": [
+            "id"
+          ]
+        },
+        "LoanToPayment": {
+          "type": "FOREIGN KEY",
+          "name": "LoanToPayment",
+          "columnNames": [
+            "loanId"
+          ],
+          "targetTableName": "Loan",
+          "targetColumnNames": [
+            "id"
+          ],
+          "updateConstraint": "NO_ACTION",
+          "deleteConstraint": "NO_ACTION"
+        },
+        "PaymentToUser": {
+          "type": "FOREIGN KEY",
+          "name": "PaymentToUser",
+          "columnNames": [
+            "userId"
+          ],
+          "targetTableName": "User",
+          "targetColumnNames": [
+            "id"
+          ],
+          "updateConstraint": "NO_ACTION",
+          "deleteConstraint": "NO_ACTION"
+        }
+      }
+    },
+    "ActivityLog": {
+      "name": "ActivityLog",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "action": {
+          "name": "action",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "resourceType": {
+          "name": "resourceType",
+          "type": "text",
+          "default": null,
+          "notNull": true,
+          "comment": null,
+          "check": null
+        },
+        "resourceId": {
+          "name": "resourceId",
+          "type": "text",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "meta": {
+          "name": "meta",
+          "type": "jsonb",
+          "default": null,
+          "notNull": false,
+          "comment": null,
+          "check": null
+        },
+        "timestamp": {
+          "name": "timestamp",
+          "type": "timestamp(3)",
+          "default": "CURRENT_TIMESTAMP",
+          "notNull": true,
+          "comment": null,
+          "check": null
+        }
+      },
+      "comment": null,
+      "indexes": {
+        "ActivityLog_pkey": {
+          "name": "ActivityLog_pkey",
+          "unique": true,
+          "columns": [
+            "id"
+          ],
+          "type": ""
+        },
+        "ActivityLog_userId_idx": {
+          "name": "ActivityLog_userId_idx",
+          "unique": false,
+          "columns": [
+            "userId"
+          ],
+          "type": ""
+        },
+        "ActivityLog_action_idx": {
+          "name": "ActivityLog_action_idx",
+          "unique": false,
+          "columns": [
+            "action"
+          ],
+          "type": ""
+        },
+        "ActivityLog_resourceType_idx": {
+          "name": "ActivityLog_resourceType_idx",
+          "unique": false,
+          "columns": [
+            "resourceType"
+          ],
+          "type": ""
+        }
+      },
+      "constraints": {
+        "PRIMARY_id": {
+          "type": "PRIMARY KEY",
+          "name": "PRIMARY_id",
+          "columnNames": [
+            "id"
+          ]
+        },
+        "ActivityLogToUser": {
+          "type": "FOREIGN KEY",
+          "name": "ActivityLogToUser",
+          "columnNames": [
+            "userId"
+          ],
+          "targetTableName": "User",
+          "targetColumnNames": [
+            "id"
+          ],
+          "updateConstraint": "NO_ACTION",
+          "deleteConstraint": "NO_ACTION"
+        }
+      }
+    }
+  },
+  "enums": {},
+  "extensions": {}
+}

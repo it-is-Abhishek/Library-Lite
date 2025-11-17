@@ -2,6 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
+import booksRoutes from './routes/books.js';
+import membersRoutes from './routes/members.js';
+import loansRoutes from './routes/loans.js';
+import paymentsRoutes from './routes/payments.js';
+import adminRoutes from './routes/admin.js';
 
 dotenv.config();
 
@@ -14,6 +19,11 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/books', booksRoutes);
+app.use('/api/members', membersRoutes);
+app.use('/api/loans', loansRoutes);
+app.use('/api/payments', paymentsRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check route
 app.get('/health', (req, res) => {

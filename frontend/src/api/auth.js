@@ -1,5 +1,5 @@
 // API configuration
-const API_BASE_URL = import.meta.env.API_BASE_URL;
+const API_BASE_URL = 'http://localhost:3000/api';
 
 // Auth API functions
 export const authAPI = {

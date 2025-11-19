@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { authAPI } from '../api/auth';
 import './LoginPage.css';
 
@@ -154,6 +154,13 @@ function LoginPage({ onSwitchToSignup, onLogin }) {
                 <p className="footer-text">
                     By continuing, you agree to our Terms & Privacy Policy
                 </p>
+
+                {/* Back to Home Link */}
+                <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                    <Link to="/" style={{ color: '#6b7280', textDecoration: 'none', fontSize: '14px' }}>
+                        ← Back to Home
+                    </Link>
+                </div>
             </div>
         </div>
     );
